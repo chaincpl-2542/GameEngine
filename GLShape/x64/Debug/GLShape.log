@@ -1,0 +1,6 @@
+﻿  CameraController.cpp
+C:\Users\ChainCPL\source\repos\GlShapeMath2\CameraController.cpp(42,23): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\ChainCPL\source\repos\GlShapeMath2\CameraController.cpp(43,23): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+  main.cpp
+  Generating Code...
+  GLShape.vcxproj -> C:\Users\ChainCPL\source\repos\GlShapeMath2\x64\Debug\GLShape.exe
