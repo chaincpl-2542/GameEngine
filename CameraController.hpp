@@ -16,6 +16,8 @@ namespace CPL
 
         void SetRightMouseDown(bool down);
 
+        void ResetCamera();
+
     private:
         Camera& camera;
         float speed = 3.0f;

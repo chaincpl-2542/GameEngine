@@ -13,7 +13,10 @@
 #include "Mesh.hpp"
 #include "Camera.hpp"
 #include "CameraController.hpp"
+#include "miniaudio.h"
+#include "SoundManager.hpp"
 
+#define MINIAUDIO_IMPLEMENTATION
 #define STB_IMAGE_IMPLEMENTATION
 
 using namespace std;
@@ -44,25 +47,38 @@ Mesh* GetMesh(ShapeType shape) {
 
 CameraController* g_camController = nullptr;
 
-void mouse_callback(GLFWwindow* window, double xpos, double ypos) 
-{
-    if (g_camController)
+void mouse_callback(GLFWwindow* window, double xpos, double ypos) {
+    ImGuiIO& io = ImGui::GetIO();
+    if (!io.WantCaptureMouse && g_camController) {
         g_camController->OnMouseMove(xpos, ypos);
+    }
+
+    ImGui_ImplGlfw_CursorPosCallback(window, xpos, ypos);
 }
 
 void mouse_button_callback(GLFWwindow* window, int button, int action, int mods) {
-    if (button == GLFW_MOUSE_BUTTON_RIGHT && g_camController) 
-    {
-        bool isDown = (action == GLFW_PRESS);
-        g_camController->SetRightMouseDown(isDown);
+    ImGuiIO& io = ImGui::GetIO();
+    if (!io.WantCaptureMouse) {
+        if (button == GLFW_MOUSE_BUTTON_RIGHT && g_camController)
+        {
+            bool isDown = (action == GLFW_PRESS);
+            g_camController->SetRightMouseDown(isDown);
 
-        glfwSetInputMode(window, GLFW_CURSOR,
-            isDown ? GLFW_CURSOR_DISABLED : GLFW_CURSOR_NORMAL);
+            glfwSetInputMode(window, GLFW_CURSOR,
+                isDown ? GLFW_CURSOR_DISABLED : GLFW_CURSOR_NORMAL);
+        }
     }
+
+    ImGui_ImplGlfw_MouseButtonCallback(window, button, action, mods);
 }
 
 // ───────────────────────────────────────────
 int main() {
+    //Sound
+    SoundManager::Get().Init();
+    SoundManager::Get().PlaySound("assets/Sound.mp3");
+    /////
+
     if (!glfwInit()) {
         cerr << "Failed to initialize GLFW" << endl;
         return -1;
@@ -94,6 +110,7 @@ int main() {
     ShapeType currentShape = ShapeType::Triangle;
     vec3 position(0.0f), rotation(0.0f);
     float size = 1.0f;
+	float ambient_intensity = 1.0f;
 
     Camera camera;
     CameraController camController(camera, (float)WINDOW_WIDTH / WINDOW_HEIGHT);
@@ -101,9 +118,10 @@ int main() {
 
     glfwSetCursorPosCallback(window, mouse_callback);
     glfwSetMouseButtonCallback(window, mouse_button_callback);
-    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 
     float lastFrame = 0.0f;
+    static glm::vec3 lightPos = glm::vec3(3, 3, 3);
 
     while (!glfwWindowShouldClose(window)) {
         glfwPollEvents();
@@ -127,6 +145,9 @@ int main() {
         ImGui::DragFloat("Size", &size, 0.1f);
         ImGui::DragFloat3("Cam Position", &camera.Position.x, 0.1f);
         ImGui::DragFloat3("Cam Target", &camera.Target.x, 0.1f);
+        ImGui::DragFloat3("Light Position", &lightPos.x, 0.1f);
+        ImGui::SliderFloat("Ambient Intensity", &ambient_intensity,0.0f, 1.0f);
+
         ImGui::End();
 
         shader.use();
@@ -145,7 +166,11 @@ int main() {
         shader.setMat4("model", model);
         shader.setMat4("view", view);
         shader.setMat4("projection", projection);
+        shader.setFloat("ambientIntensity", ambient_intensity);
         shader.setInt("mytexture", 0);
+        shader.setVec3("lightDir", glm::vec3(0.0f, 0.0f, 1.0f));
+        shader.setVec3("lightColor", glm::vec3(1.0f, 1.0f, 1.0f));
+        shader.setVec3("lightPos", lightPos);
 
         GetMesh(currentShape)->Draw();
 
@@ -162,5 +187,8 @@ int main() {
 
     ShutdownImGui();
     glfwTerminate();
+
+    SoundManager::Get().Destroy();
+
     return 0;
 }

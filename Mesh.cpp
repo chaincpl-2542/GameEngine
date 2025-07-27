@@ -42,6 +42,9 @@ namespace CPL
         glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, TexCoord));
         glEnableVertexAttribArray(2);
 
+        glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Normal));
+        glEnableVertexAttribArray(3);
+
         glBindVertexArray(0);
     }
 
@@ -54,10 +57,11 @@ namespace CPL
 
     Mesh Mesh::CreateTriangle()
     {
+        glm::vec3 normal = { 0, 0, 1 };
         std::vector<Vertex> verts = {
-            Vertex({ 0.0f,  0.5f, 0.0f }, {1,0,0}, {0.5f, 1.0f}),
-            Vertex({ 0.5f, -0.5f, 0.0f }, {0,1,0}, {1.0f, 0.0f}),
-            Vertex({-0.5f, -0.5f, 0.0f }, {0,0,1}, {0.0f, 0.0f}),
+            Vertex({ 0.0f,  0.5f, 0.0f }, {1,0,0}, {0.5f, 1.0f}, normal),
+            Vertex({ 0.5f, -0.5f, 0.0f }, {0,1,0}, {1.0f, 0.0f}, normal),
+            Vertex({-0.5f, -0.5f, 0.0f }, {0,0,1}, {0.0f, 0.0f}, normal),
         };
 
         std::vector<unsigned int> inds = {
@@ -69,14 +73,15 @@ namespace CPL
 
     Mesh Mesh::CreateQuad(float width, float height)
     {
+        glm::vec3 normal = { 0, 0, 1 };
         float hw = width * 0.5f;
         float hh = height * 0.5f;
 
         std::vector<Vertex> verts = {
-            Vertex({ hw,  hh, 0.0f }, {1,0,0}, {1,1}),  // top-right
-            Vertex({ hw, -hh, 0.0f }, {0,1,0}, {1,0}),  // bottom-right
-            Vertex({-hw, -hh, 0.0f }, {0,0,1}, {0,0}),  // bottom-left
-            Vertex({-hw,  hh, 0.0f }, {1,1,0}, {0,1})   // top-left
+            Vertex({ hw,  hh, 0.0f }, {1,0,0}, {1,1}, normal),  // top-right
+            Vertex({ hw, -hh, 0.0f }, {0,1,0}, {1,0}, normal),  // bottom-right
+            Vertex({-hw, -hh, 0.0f }, {0,0,1}, {0,0}, normal),  // bottom-left
+            Vertex({-hw,  hh, 0.0f }, {1,1,0}, {0,1}, normal)   // top-left
         };
 
         std::vector<unsigned int> inds = {
@@ -89,10 +94,11 @@ namespace CPL
 
     Mesh Mesh::CreateCircle(float radius, int segments)
     {
+        glm::vec3 normal = { 0, 0, 1 };
         std::vector<Vertex> verts;
         std::vector<unsigned int> inds;
 
-        verts.push_back(Vertex({ 0.0f, 0.0f, 0.0f }, { 1, 0, 0 }, { 0.5f, 0.5f }));
+        verts.push_back(Vertex({ 0.0f, 0.0f, 0.0f }, { 1, 0, 0 }, { 0.5f, 0.5f }, normal));
 
         for (int i = 0; i <= segments; ++i)
         {
@@ -103,7 +109,7 @@ namespace CPL
             float u = (x / (radius * 2.0f)) + 0.5f;
             float v = (y / (radius * 2.0f)) + 0.5f;
 
-            verts.push_back(Vertex({ x, y, 0.0f }, {1, 1, 0 }, { u, v }));
+            verts.push_back(Vertex({ x, y, 0.0f }, {1, 1, 0 }, { u, v }, normal));
         }
 
         for (int i = 1; i <= segments; ++i)
@@ -118,20 +124,21 @@ namespace CPL
 
     Mesh Mesh::CreateCube(float size)
     {
+        glm::vec3 normal = { 0, 0, 1 };
         float h = size * 0.5f;
 
         std::vector<Vertex> verts = {
             // Front face
-            {{-h, -h,  h}, {1, 0, 0}, {0, 0}},
-            {{ h, -h,  h}, {0, 1, 0}, {1, 0}},
-            {{ h,  h,  h}, {0, 0, 1}, {1, 1}},
-            {{-h,  h,  h}, {1, 1, 0}, {0, 1}},
+            {{-h, -h,  h}, {1, 0, 0}, {0, 0}, normal},
+            {{ h, -h,  h}, {0, 1, 0}, {1, 0}, normal},
+            {{ h,  h,  h}, {0, 0, 1}, {1, 1}, normal},
+            {{-h,  h,  h}, {1, 1, 0}, {0, 1}, normal},
 
             // Back face
-            {{-h, -h, -h}, {1, 0, 1}, {1, 0}},
-            {{ h, -h, -h}, {0, 1, 1}, {0, 0}},
-            {{ h,  h, -h}, {1, 1, 1}, {0, 1}},
-            {{-h,  h, -h}, {0.5, 0.5, 0.5}, {1, 1}},
+            {{-h, -h, -h}, {1, 0, 1}, {1, 0}, normal},
+            {{ h, -h, -h}, {0, 1, 1}, {0, 0}, normal},
+            {{ h,  h, -h}, {1, 1, 1}, {0, 1}, normal},
+            {{-h,  h, -h}, {0.5, 0.5, 0.5}, {1, 1}, normal},
         };
 
         std::vector<unsigned int> inds = {
@@ -154,17 +161,18 @@ namespace CPL
 
     Mesh Mesh::CreatePyramid(float base, float height)
     {
+        glm::vec3 normal = { 0, 0, 1 };
         float h = base * 0.5f;
 
         std::vector<Vertex> verts = {
             // Base (square)
-            {{-h, 0.0f, -h}, {1, 0, 0}, {0, 0}},
-            {{ h, 0.0f, -h}, {0, 1, 0}, {1, 0}},
-            {{ h, 0.0f,  h}, {0, 0, 1}, {1, 1}},
-            {{-h, 0.0f,  h}, {1, 1, 0}, {0, 1}},
+            {{-h, 0.0f, -h}, {1, 0, 0}, {0, 0}, normal},
+            {{ h, 0.0f, -h}, {0, 1, 0}, {1, 0}, normal},
+            {{ h, 0.0f,  h}, {0, 0, 1}, {1, 1}, normal},
+            {{-h, 0.0f,  h}, {1, 1, 0}, {0, 1}, normal},
 
             // Tip
-            {{0.0f, height, 0.0f}, {1, 1, 1}, {0.5f, 0.5f}},
+            {{0.0f, height, 0.0f}, {1, 1, 1}, {0.5f, 0.5f}, normal},
         };
 
         std::vector<unsigned int> inds = {

@@ -136,7 +136,9 @@
     <ClCompile Include="ImGuiLayer.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Mesh.cpp" />
+    <ClCompile Include="miniaudio.c" />
     <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="TextureLoader.cpp" />
     <ClCompile Include="thirdpatry\imgui-master\backends\imgui_impl_glfw.cpp" />
     <ClCompile Include="thirdpatry\imgui-master\backends\imgui_impl_opengl3.cpp" />
@@ -151,7 +153,9 @@
     <ClInclude Include="CameraController.hpp" />
     <ClInclude Include="ImGuiLayer.hpp" />
     <ClInclude Include="Mesh.hpp" />
+    <ClInclude Include="miniaudio.h" />
     <ClInclude Include="Shader.hpp" />
+    <ClInclude Include="SoundManager.hpp" />
     <ClInclude Include="TextureLoader.hpp" />
     <ClInclude Include="thirdpatry\imgui-master\backends\imgui_impl_glfw.h" />
     <ClInclude Include="thirdpatry\imgui-master\backends\imgui_impl_opengl3.h" />

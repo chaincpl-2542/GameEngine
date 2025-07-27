@@ -9,9 +9,15 @@ namespace CPL
         glm::vec3 Position;
         glm::vec3 Color;
         glm::vec2 TexCoord;
-
-        Vertex(glm::vec3 pos, glm::vec3 color = glm::vec3(1.0f), glm::vec2 texCoord = glm::vec2(0.0f))
-            : Position(pos), Color(color), TexCoord(texCoord) {}
+        glm::vec3 Normal;
+        Vertex(
+            glm::vec3 pos,
+            glm::vec3 color = glm::vec3(1, 1, 1),
+            glm::vec2 texCoord = glm::vec2(0, 0),
+            glm::vec3 normal = glm::vec3(0, 0, 1)
+        )
+            : Position(pos), Color(color), TexCoord(texCoord), Normal(normal) {
+        }
     };
 
     class Mesh {
