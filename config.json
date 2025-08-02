@@ -1,0 +1,17 @@
+{
+  "camera": {
+    "position": [ 0, 0, 3 ],
+    "fov": 45.0,
+    "nearClip": 0.1,
+    "farClip": 100.0
+  },
+  "light": {
+    "position": [ 3, 3, 3 ]
+  },
+  "assets": {
+    "texture": "assets/brick.png",
+    "vertexShader": "assets/vertex.glsl",
+    "fragmentShader": "assets/fragment.glsl",
+    "sound": "assets/Sound.mp3"
+  }
+}

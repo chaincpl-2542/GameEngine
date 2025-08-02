@@ -1,0 +1,17 @@
+C:\UnityProjects\GameEngine\Camera.cpp;C:\UnityProjects\GameEngine\x64\Debug\Camera.obj
+C:\UnityProjects\GameEngine\CameraController.cpp;C:\UnityProjects\GameEngine\x64\Debug\CameraController.obj
+C:\UnityProjects\GameEngine\ImGuiLayer.cpp;C:\UnityProjects\GameEngine\x64\Debug\ImGuiLayer.obj
+C:\UnityProjects\GameEngine\main.cpp;C:\UnityProjects\GameEngine\x64\Debug\main.obj
+C:\UnityProjects\GameEngine\Mesh.cpp;C:\UnityProjects\GameEngine\x64\Debug\Mesh.obj
+C:\UnityProjects\GameEngine\miniaudio.c;C:\UnityProjects\GameEngine\x64\Debug\miniaudio.obj
+C:\UnityProjects\GameEngine\SceneManager.cpp;C:\UnityProjects\GameEngine\x64\Debug\SceneManager.obj
+C:\UnityProjects\GameEngine\Shader.cpp;C:\UnityProjects\GameEngine\x64\Debug\Shader.obj
+C:\UnityProjects\GameEngine\SoundManager.cpp;C:\UnityProjects\GameEngine\x64\Debug\SoundManager.obj
+C:\UnityProjects\GameEngine\TextureLoader.cpp;C:\UnityProjects\GameEngine\x64\Debug\TextureLoader.obj
+C:\UnityProjects\GameEngine\thirdpatry\imgui-master\backends\imgui_impl_glfw.cpp;C:\UnityProjects\GameEngine\x64\Debug\imgui_impl_glfw.obj
+C:\UnityProjects\GameEngine\thirdpatry\imgui-master\backends\imgui_impl_opengl3.cpp;C:\UnityProjects\GameEngine\x64\Debug\imgui_impl_opengl3.obj
+C:\UnityProjects\GameEngine\thirdpatry\imgui-master\imgui.cpp;C:\UnityProjects\GameEngine\x64\Debug\imgui.obj
+C:\UnityProjects\GameEngine\thirdpatry\imgui-master\imgui_demo.cpp;C:\UnityProjects\GameEngine\x64\Debug\imgui_demo.obj
+C:\UnityProjects\GameEngine\thirdpatry\imgui-master\imgui_draw.cpp;C:\UnityProjects\GameEngine\x64\Debug\imgui_draw.obj
+C:\UnityProjects\GameEngine\thirdpatry\imgui-master\imgui_tables.cpp;C:\UnityProjects\GameEngine\x64\Debug\imgui_tables.obj
+C:\UnityProjects\GameEngine\thirdpatry\imgui-master\imgui_widgets.cpp;C:\UnityProjects\GameEngine\x64\Debug\imgui_widgets.obj

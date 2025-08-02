@@ -6,7 +6,6 @@ namespace CPL {
     CameraController::CameraController(Camera& cam, float aspect)
         : camera(cam), isRightMouseDown(false) 
     {
-        camera.Position = glm::vec3(0, 0, 3);
         camera.Target = camera.Position + front;
     }
 

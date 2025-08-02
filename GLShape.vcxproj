@@ -105,7 +105,8 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)\thirdpatry\stb-master;$(ProjectDir)\thirdpatry\imgui-master\backends;$(ProjectDir)\thirdpatry\imgui-master;$(ProjectDir)\thirdpatry\glew-2.1.0\include;$(ProjectDir)\thirdpatry\glfw-3.4.bin.WIN64\include;$(ProjectDir)\thirdpatry\glm-master;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\thirdpatry\json-develop\single_include\nlohmann;$(ProjectDir)\thirdpatry\stb-master;$(ProjectDir)\thirdpatry\imgui-master\backends;$(ProjectDir)\thirdpatry\imgui-master;$(ProjectDir)\thirdpatry\glew-2.1.0\include;$(ProjectDir)\thirdpatry\glfw-3.4.bin.WIN64\include;$(ProjectDir)\thirdpatry\glm-master;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -137,6 +138,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="miniaudio.c" />
+    <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="TextureLoader.cpp" />
@@ -154,6 +156,7 @@
     <ClInclude Include="ImGuiLayer.hpp" />
     <ClInclude Include="Mesh.hpp" />
     <ClInclude Include="miniaudio.h" />
+    <ClInclude Include="SceneManager.hpp" />
     <ClInclude Include="Shader.hpp" />
     <ClInclude Include="SoundManager.hpp" />
     <ClInclude Include="TextureLoader.hpp" />
@@ -169,6 +172,9 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\paper_texture.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="config.json" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
