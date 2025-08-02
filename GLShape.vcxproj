@@ -140,6 +140,7 @@
     <ClCompile Include="miniaudio.c" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="Skybox.cpp" />
     <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="TextureLoader.cpp" />
     <ClCompile Include="thirdpatry\imgui-master\backends\imgui_impl_glfw.cpp" />
@@ -158,6 +159,7 @@
     <ClInclude Include="miniaudio.h" />
     <ClInclude Include="SceneManager.hpp" />
     <ClInclude Include="Shader.hpp" />
+    <ClInclude Include="Skybox.hpp" />
     <ClInclude Include="SoundManager.hpp" />
     <ClInclude Include="TextureLoader.hpp" />
     <ClInclude Include="thirdpatry\imgui-master\backends\imgui_impl_glfw.h" />

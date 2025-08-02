@@ -6,6 +6,7 @@ C:\UnityProjects\GameEngine\Mesh.cpp;C:\UnityProjects\GameEngine\x64\Debug\Mesh.
 C:\UnityProjects\GameEngine\miniaudio.c;C:\UnityProjects\GameEngine\x64\Debug\miniaudio.obj
 C:\UnityProjects\GameEngine\SceneManager.cpp;C:\UnityProjects\GameEngine\x64\Debug\SceneManager.obj
 C:\UnityProjects\GameEngine\Shader.cpp;C:\UnityProjects\GameEngine\x64\Debug\Shader.obj
+C:\UnityProjects\GameEngine\Skybox.cpp;C:\UnityProjects\GameEngine\x64\Debug\Skybox.obj
 C:\UnityProjects\GameEngine\SoundManager.cpp;C:\UnityProjects\GameEngine\x64\Debug\SoundManager.obj
 C:\UnityProjects\GameEngine\TextureLoader.cpp;C:\UnityProjects\GameEngine\x64\Debug\TextureLoader.obj
 C:\UnityProjects\GameEngine\thirdpatry\imgui-master\backends\imgui_impl_glfw.cpp;C:\UnityProjects\GameEngine\x64\Debug\imgui_impl_glfw.obj

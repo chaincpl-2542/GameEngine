@@ -19,6 +19,7 @@
 #include "miniaudio.h"
 #include "SoundManager.hpp"
 #include "SceneManager.hpp"
+#include "Skybox.hpp"
 
 #define MINIAUDIO_IMPLEMENTATION
 #define STB_IMAGE_IMPLEMENTATION
@@ -28,8 +29,8 @@ using namespace CPL;
 using namespace glm;
 using json = nlohmann::json;
 
-const unsigned int WINDOW_WIDTH = 800;
-const unsigned int WINDOW_HEIGHT = 600;
+const unsigned int WINDOW_WIDTH = 1920;
+const unsigned int WINDOW_HEIGHT = 1080;
 
 enum class ShapeType { Triangle = 1, Circle, Quad, Cube, Pyramid };
 
@@ -137,6 +138,16 @@ int main()
     //Load Texture
     unsigned int texture = LoadTexture(config["assets"]["texture"]);
 
+    Skybox sky;
+    sky.Load({
+    "assets/px.png", // right
+    "assets/nx.png", // left
+    "assets/py.png", // top
+    "assets/ny.png", // bottom
+    "assets/pz.png", // front
+    "assets/nz.png"  // back
+        });
+
     vector<SceneObject> sceneObjects;
     int selectedObjectIndex = -1;
     float ambient_intensity = 1.0f;
@@ -190,10 +201,10 @@ int main()
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
 
-        // ───────── Inspector (แทนที่บล็อกเดิมทั้งหมด) ─────────
+        //Inspector
         ImGui::Begin("Inspector");
 
-        // ── SECTION 1 : สร้าง Shape ────────────────────────────
+        //Create Shape
         static int selectedShapeIndex = 0;
         const char* shapeNames[] = { "Triangle", "Circle", "Quad", "Cube", "Pyramid" };
 
@@ -213,9 +224,9 @@ int main()
             selectedObjectIndex = (int)sceneObjects.size() - 1;
         }
 
-        // ── SECTION 2 : เลือก & แก้ไข Object ───────────────────
+        //Select and edit Object
         if (!sceneObjects.empty()) {
-            //---- dropdown รายชื่อ object
+            //---- dropdown object
             std::vector<std::string> labels;
             for (int i = 0; i < sceneObjects.size(); ++i)
                 labels.push_back("Object " + std::to_string(i + 1));
@@ -226,7 +237,7 @@ int main()
             ImGui::Combo("Select Obj", &selectedObjectIndex,
                 names.data(), (int)names.size());
 
-            //---- ปุ่มลบ object ที่เลือก
+            //Delete object
             if (ImGui::Button("Delete Selected") &&
                 selectedObjectIndex >= 0 &&
                 selectedObjectIndex < sceneObjects.size()) {
@@ -234,7 +245,7 @@ int main()
                 selectedObjectIndex = -1;
             }
 
-            //---- แก้ไข transform ของ object ที่เลือก
+            //transform
             if (selectedObjectIndex >= 0 &&
                 selectedObjectIndex < sceneObjects.size()) {
                 SceneObject& sel = sceneObjects[selectedObjectIndex];
@@ -245,21 +256,21 @@ int main()
             }
         }
 
-        // ── SECTION 3 : Global (Camera/Light/Ambient) ──────────
+        // Global
         ImGui::Separator();
         ImGui::DragFloat3("Cam Position", &camera.Position.x, 0.1f);
         ImGui::DragFloat3("Cam Target", &camera.Target.x, 0.1f);
         ImGui::DragFloat3("Light Pos", &lightPos.x, 0.1f);
         ImGui::SliderFloat("Ambient", &ambient_intensity, 0.0f, 1.0f);
 
-        // ── SECTION 4 : Save / Load Scene ──────────────────────
+        //Save / Load Scene
         static char sceneName[128] = "scene1.json";
         ImGui::InputText("Scene File", sceneName, IM_ARRAYSIZE(sceneName));
 
         if (ImGui::Button("Save Scene")) {
             json scene;
 
-            //-- เซฟ objects
+            //Save objects
             for (const auto& o : sceneObjects) {
                 json j;                        // object node
                 j["position"] = { o.position.x, o.position.y, o.position.z };
@@ -268,7 +279,7 @@ int main()
                 j["shape"] = (int)o.shape;
                 scene["objects"].push_back(j);
             }
-            //-- เซฟ global
+            //Save global
             scene["light"] = { lightPos.x, lightPos.y, lightPos.z };
             scene["ambient"] = ambient_intensity;
             scene["camera"]["position"] = { camera.Position.x, camera.Position.y, camera.Position.z };
@@ -285,7 +296,7 @@ int main()
             if (in) {
                 json scene; in >> scene;
 
-                //-- โหลด objects
+                //Load objects
                 sceneObjects.clear();
                 for (auto& j : scene["objects"]) {
                     SceneObject o;
@@ -296,7 +307,7 @@ int main()
                     sceneObjects.push_back(o);
                 }
 
-                //-- โหลด global
+                //Load global
                 lightPos = { scene["light"][0], scene["light"][1], scene["light"][2] };
                 ambient_intensity = scene["ambient"];
                 camera.Position = { scene["camera"]["position"][0],
@@ -310,13 +321,17 @@ int main()
         }
 
         ImGui::End();
+        mat4 view = camera.GetViewMatrix();
+        mat4 projection = camera.GetProjectionMatrix((float)WINDOW_WIDTH / WINDOW_HEIGHT);
 
+        glDepthMask(GL_FALSE);
+        sky.Draw(camera.GetViewMatrix(), projection);
+        glDepthMask(GL_TRUE);
 
         shader.use();
         glBindTexture(GL_TEXTURE_2D, texture);
 
-        mat4 view = camera.GetViewMatrix();
-        mat4 projection = camera.GetProjectionMatrix((float)WINDOW_WIDTH / WINDOW_HEIGHT);
+       
 
         shader.setMat4("view", view);
         shader.setMat4("projection", projection);
@@ -362,6 +377,7 @@ int main()
         glfwSwapBuffers(window);
     }
 
+    sky.Destroy();
     ShutdownImGui();
     glfwTerminate();
 
